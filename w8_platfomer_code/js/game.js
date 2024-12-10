@@ -25,6 +25,10 @@ var platform3 = new GameObject
 var platform4 = new GameObject
 var platform5 = new GameObject
 var gameScenes = ["gameOver"]
+var currentScene = gameScenes[0]
+var numberOfPlatforms = 100;
+var colors = ["red", "blue", "yellow", "orange", "purple"]
+
 
 
 function init()
@@ -42,46 +46,46 @@ function init()
     ground.y = c.height - ground.h/2;
     ground.world = level
 
-    platform.w = 100;
-    platform.h = 30;
-    platform.color = `orange`
-    platform.x = 300
-    platform.world = level
+    // platform.w = 100;
+    // platform.h = 30;
+    // platform.color = `orange`
+    // platform.x = 300
+    // platform.world = level
 
-    //Added
-    platform2.w = 100;
-    platform2.h = 30;
-    platform2.color = "blue"
-    platform2.x = 80;
-    platform2.y = 100
-    platform2.world = level
+    // //Added
+    // platform2.w = 100;
+    // platform2.h = 30;
+    // platform2.color = "blue"
+    // platform2.x = 80;
+    // platform2.y = 100
+    // platform2.world = level
 
-    platform3.w = 100;
-    platform3.h = 30;
-    platform3.color = "red"
-    platform3.x = 300;
-    platform3.y = -100
-    platform3.world = level
+    // platform3.w = 100;
+    // platform3.h = 30;
+    // platform3.color = "red"
+    // platform3.x = 300;
+    // platform3.y = -100
+    // platform3.world = level
 
-    platform4.w = 100;
-    platform4.h = 30;
-    platform4.color = "red"
-    platform4.x = 50;
-    platform4.y = -400
-    platform4.world = level
+    // platform4.w = 100;
+    // platform4.h = 30;
+    // platform4.color = "red"
+    // platform4.x = 50;
+    // platform4.y = -400
+    // platform4.world = level
 
-    platform5.w = 100;
-    platform5.h = 30;
-    platform5.color = "green"
-    platform5.x = 200;
-    platform5.y = -600
-    platform5.world = level
+    // platform5.w = 100;
+    // platform5.h = 30;
+    // platform5.color = "green"
+    // platform5.x = 200;
+    // platform5.y = -600
+    // platform5.world = level
 
-    platforms[0] = platform;
-    platforms[1] = platform2;
-    platforms[2] = platform3;
-    platforms[3] = platform4;
-    platforms[4] = platform5;
+    // platforms[0] = platform;
+    // platforms[1] = platform2;
+    // platforms[2] = platform3;
+    // platforms[3] = platform4;
+    // platforms[4] = platform5;
     
    
 
@@ -94,6 +98,20 @@ function init()
 
 }
 
+function createPlatforms(){
+    var platformY = 200;
+    platforms = [];
+    for(var i = 0; i<numberOfPlatforms;i++){
+        platforms[i] = new GameObject();
+        platforms[i].w = 100;
+        platforms[i].h = 30;
+        platforms[i].color = colors[Math.round(rand(0, colors.length))];
+        platforms[i].x = rand(0, c.width);
+        platforms[i].y = platformY -= 200;
+        platforms[i].world = level
+    }
+}
+
 init();
 
 /*---------------Game Screens (states)----------------*/
@@ -101,6 +119,7 @@ function menu()
 {
     if(clicked(button))
     {
+        createPlatforms();
         state = game;
     }
     button.render()
@@ -149,26 +168,10 @@ function game()
         avatar.canJump = true;
     }
 
-    while(wall.isOverPoint(avatar.right()) && avatar.vx >= 0)
-    {
-        avatar.vx = 0;
-        avatar.x--;
-        offset.x--;
-    }
-    while(wall.isOverPoint(avatar.left()) && avatar.vx <= 0)
-        {
-            avatar.vx = 0;
-            avatar.x++;
-            offset.x++;
-        }
+    
+    
         //Added
-    while(platform2.isOverPoint(avatar.bottom()) && avatar.vy >=0)
-        {
-            avatar.vy = 0;
-            avatar.y--;
-            offset.y--;
-            avatar.canJump = true;
-        }
+   
 
 
     /*-------Level movement threshold----*/
@@ -194,6 +197,11 @@ function game()
 
     ground.render();
     for(var i = 0; i<platforms.length; i++){
+        // var distY = avatar.y - platforms[0].y;
+        // console.log(avatar.y);
+        // if(distY > 155){
+        //     platforms[i].y = avatar.y - 150;
+        // }
         while(platforms[i].isOverPoint(avatar.bottom()) && avatar.vy >= 0)
             {
                 avatar.vy = -29;
@@ -201,10 +209,12 @@ function game()
                 offset.y--;
                 avatar.canJump = true;
             }
+        
         platforms[i].render();
     }
-    wall.render();
+    //wall.render();
     avatar.render();
+    
     
     
 }

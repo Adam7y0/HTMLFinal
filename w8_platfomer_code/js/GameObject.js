@@ -81,6 +81,17 @@ class GameObject
         ctx.restore();
     }
 
+    //Draws an image
+   /* renderImage(Image)
+    {
+        ctx.save();
+            ctx.fillstyle = this.color
+            ctx.translate(this.x, this.y)
+            ctx.rotate(this.angle*Math.pi/180)
+            ctx.drawImage(image,-this.w/2, -this.h/2, this.w, this.h)
+        ctx.restore();
+    }*/
+
     //Moves an object by adding it's velocity to it's position on each axis
     move()
     {
