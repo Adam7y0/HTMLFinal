@@ -14,6 +14,7 @@ function main()
 var state;
 var button = new GameObject();
 var avatar = new GameObject();
+var avatarImage = document.getElementById("doodle");
 var ground = new GameObject();
 var platform = new GameObject();
 var wall = new GameObject();
@@ -214,6 +215,7 @@ function game()
     }
     //wall.render();
     avatar.render();
+    avatar.renderImage(avatarImage);
     
     
     

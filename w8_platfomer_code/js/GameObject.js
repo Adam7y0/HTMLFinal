@@ -82,7 +82,7 @@ class GameObject
     }
 
     //Draws an image
-   /* renderImage(Image)
+   renderImage(image)
     {
         ctx.save();
             ctx.fillstyle = this.color
@@ -90,7 +90,7 @@ class GameObject
             ctx.rotate(this.angle*Math.pi/180)
             ctx.drawImage(image,-this.w/2, -this.h/2, this.w, this.h)
         ctx.restore();
-    }*/
+    }
 
     //Moves an object by adding it's velocity to it's position on each axis
     move()
